@@ -1,7 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const IpAddress = sequelize.define('IpAddress', {
-    ip: DataTypes.STRING
+   ip: {
+		type:DataTypes.STRING,
+	}
   }, {
     classMethods: {
       associate: (models) => {

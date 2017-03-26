@@ -1,20 +1,19 @@
 const express = require('express'),
     Router = express.Router(),
-    Index = require('../controllers/IndexController');
+    Controllers = require('../controllers');
 /*
  * --- HTML Routes ---
  */
-Router.get('/', Index.loadIndex);
+Router.get('/', Controllers.index.loadIndex);
 
 /*
  * --- API Routes ---
  */
 
-Router.get('/api/', (req,res) => {
+Router.get('/api/questions', Controllers.questions.list);
 
-	res.json({testing:"API"});
-
-})
-
+Router.post('/api/questions', Controllers.questions.create);
+Router.post('/api/questions/:questionId/answer', Controllers.answers.create);
+Router.post('/api/questions/:questionId/ipAddress', Controllers.ipAddress.create);
 
 module.exports = Router;
