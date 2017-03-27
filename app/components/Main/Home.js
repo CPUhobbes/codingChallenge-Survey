@@ -27,8 +27,8 @@ class Home extends Component{
 	componentWillMount(){
 		Utils.getQuestion().then((data)=>{
 			let newObj = {
-				question:data.question,
-				answers:data.answers,
+				question:data[0].question,
+				answers:data[0].answers,
 
 			}
 			this.setState({survey:newObj});
@@ -61,7 +61,6 @@ class Home extends Component{
 	render(){
 		let question = this.state.survey.question;
 		let answers = this.state.survey.answers;
-		
 		return (
 			
 			<div>

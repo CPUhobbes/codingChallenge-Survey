@@ -2,6 +2,7 @@ const Question = require('../models').Question;
 const Answer = require('../models').Answer;
 const IpAddress = require('../models').IpAddress;
 Question.hasMany(Answer, IpAddress, { onDelete: 'cascade' });
+const sequelize = require('sequelize');
 //Answer.belongsTo(Question);
 
 module.exports = {
@@ -61,7 +62,11 @@ module.exports = {
 		console.log(ipAddr);
 
 		return Question
-			.findOne({
+			.findAll({
+				order: [
+  					[sequelize.fn('RAND')]
+				],
+				limit: 1,
 				include:[
 				{
 					model: Answer,

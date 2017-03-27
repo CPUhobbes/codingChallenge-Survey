@@ -26739,8 +26739,8 @@
 
 				_utils2.default.getQuestion().then(function (data) {
 					var newObj = {
-						question: data.question,
-						answers: data.answers
+						question: data[0].question,
+						answers: data[0].answers
 
 					};
 					_this2.setState({ survey: newObj });
@@ -26772,7 +26772,6 @@
 			value: function render() {
 				var question = this.state.survey.question;
 				var answers = this.state.survey.answers;
-
 				return _react2.default.createElement(
 					'div',
 					null,
