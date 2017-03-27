@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const IpAddress = sequelize.define('IpAddress', {
    ip: {
 		type:DataTypes.STRING,
+    allowNull: false,
 	}
   }, {
     classMethods: {
