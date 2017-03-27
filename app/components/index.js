@@ -20,8 +20,9 @@ class Index extends Component {
 
 		return(
 		  	<div>
+			  	<Link to="/Admin"><h5 className="text-right">Admin Login</h5></Link>
 				<h1 className="text-center">Coding-Challenge-Survey</h1>
-				<Link to="/Admin"><h4 className="text-right">Admin Login</h4></Link>
+				
 
 				{/*Render component children, important!!*/}
 				{this.props.children}

@@ -1,20 +1,26 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid, Form, FormGroup, Radio, RadioGroup} from 'react-bootstrap';
+import { Row, Col, Grid, Form, Radio, Button} from 'react-bootstrap';
 import Utils from '../Utils/utils';
+import {hashHistory} from 'react-router';
 
 class Home extends Component{
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			question:'',
-			answers:[],
+			survey:{
+				question:'',
+				answers:[],
+			},
 			selection:-1
 
 		};
-		this.handleFormChange = this.handleFormChange.bind(this);
+
 		//Bind functions here
+		this.handleFormChange = this.handleFormChange.bind(this);
+		this.handleFormSubmit = this.handleFormSubmit.bind(this);
+		
 
   	}
 	
@@ -25,7 +31,7 @@ class Home extends Component{
 				answers:data.answers,
 
 			}
-			this.setState(newObj);
+			this.setState({survey:newObj});
 		});
 	}
 
@@ -36,7 +42,16 @@ class Home extends Component{
 
 	
 	handleFormSubmit(event){
-
+		event.preventDefault();
+		console.log(this.state.selection);
+		Utils.submitAnswer(this.state.selection).then((response) =>{
+			if(response.status === 201){
+				hashHistory.push('/ThankYou');
+			}
+			else{
+				hashHistory.push('/Error');
+			}
+		})
 	}
 	
 	handleFormChange(event){
@@ -44,8 +59,8 @@ class Home extends Component{
 	}
 
 	render(){
-		let question = this.state.question;
-		let answers = this.state.answers;
+		let question = this.state.survey.question;
+		let answers = this.state.survey.answers;
 		
 		return (
 			
@@ -60,19 +75,19 @@ class Home extends Component{
 								<h2 className="text-center">{question}</h2>
 							</Col>
 							<Col sm={12}>
-								<Form onChange={this.handleFormChange}>
+								<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
 								
 								
 									{answers.map((val, index) => {
 										return (
-											<Radio key={index} id={val.id} name="groupOptions">
-												{val.answer}
+											<Radio key={index} id={val.id} name="radioGroup">
+												{val.answer} --- {val.responses}
 												{/*<p> {val.answer} --- {val.responses} --- {val.id} </p>*/}
 											</Radio>
 										)
 									})}
 									
-								
+									<Button type='submit' bsStyle='primary'> Submit </Button>
 								</Form>
 								
 							</Col>
