@@ -14,7 +14,7 @@ module.exports = {
 			
 		return IpAddress
 			.create({
-				ip: '192.168.0.101',
+				ip: ipAddr,
                 questionId: req.body.data.questionId
 			})
 			.then(ip => res.status(201).send(ip))

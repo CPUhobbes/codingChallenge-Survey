@@ -1,9 +1,9 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid, Form, Radio, Button} from 'react-bootstrap';
-import Utils from '../Utils/utils';
+import { Row, Col, Grid, Button} from 'react-bootstrap';
+import {hashHistory} from 'react-router';
 
-class Home extends Component{
+class ThankYou extends Component{
 	constructor(props) {
 		super(props);
 
@@ -12,40 +12,27 @@ class Home extends Component{
 		};
 
 		//Bind functions here
-		//this.handleFormChange = this.handleFormChange.bind(this);
-		//this.handleFormSubmit = this.handleFormSubmit.bind(this);
+		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 		
 
   	}
 	
-	componentWillMount(){
-		
-	}
-
-	componentDidUpdate(prevProps, prevState){
-		
-	}
-
-
-	
 	handleFormSubmit(event){
-		
-	}
-	
-	handleFormChange(event){
-		
+		hashHistory.push('/');
 	}
 
 	render(){
 		
-		
 		return (
-			
 			<div>
 				<Grid>
 					<Row>
 						<Col sm={12}>
 							<h2 className="text-center">Thank You For Your Submission!</h2>
+							<br /><br />
+							<div className="text-center">
+								<Button onClick={this.handleFormSubmit} bsStyle='primary' bsSize="lg"> Try Another Question </Button>
+							</div>
 						</Col>
 					</Row>
 				</Grid>
@@ -54,4 +41,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default ThankYou;

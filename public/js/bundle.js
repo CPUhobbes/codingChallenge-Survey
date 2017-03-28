@@ -26565,35 +26565,35 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _ThankYou = __webpack_require__(515);
+	var _ThankYou = __webpack_require__(513);
 
 	var _ThankYou2 = _interopRequireDefault(_ThankYou);
 
-	var _Admin = __webpack_require__(513);
+	var _Admin = __webpack_require__(514);
 
 	var _Admin2 = _interopRequireDefault(_Admin);
 
-	var _Results = __webpack_require__(520);
+	var _Results = __webpack_require__(518);
 
 	var _Results2 = _interopRequireDefault(_Results);
 
-	var _Add = __webpack_require__(521);
+	var _Add = __webpack_require__(519);
 
 	var _Add2 = _interopRequireDefault(_Add);
 
-	var _Delete = __webpack_require__(522);
+	var _Delete = __webpack_require__(520);
 
 	var _Delete2 = _interopRequireDefault(_Delete);
 
-	var _Success = __webpack_require__(523);
+	var _Success = __webpack_require__(521);
 
 	var _Success2 = _interopRequireDefault(_Success);
 
-	var _NotFound = __webpack_require__(514);
+	var _NotFound = __webpack_require__(522);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _Submit = __webpack_require__(516);
+	var _Submit = __webpack_require__(523);
 
 	var _Submit2 = _interopRequireDefault(_Submit);
 
@@ -26650,6 +26650,8 @@
 
 	var _reactRouter = __webpack_require__(178);
 
+	var _reactBootstrap = __webpack_require__(236);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26667,26 +26669,86 @@
 
 			var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
 
-			_this.state = {};
-			//Bind functions here
+			_this.state = {
+				modal: {
+					showModal: false,
+					enable: true
+				},
+				message: "",
+				login: false,
+				failedLogin: false,
+				user: "",
+				pass: ""
 
+			};
+			//Bind functions here
+			_this.triggerModal = _this.triggerModal.bind(_this);
+			_this.loginSubmitHandler = _this.loginSubmitHandler.bind(_this);
+			_this.loginFormHandler = _this.loginFormHandler.bind(_this);
+			_this.getLogInStatus = _this.getLogInStatus.bind(_this);
 			return _this;
 		}
 
 		_createClass(Index, [{
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {
+
+				//Check to see if password message needs updating
+				if (prevState.failedLogin !== this.state.failedLogin) {
+					if (this.state.failedLogin) {
+						this.setState({ message: "Login Error" });
+					} else {
+						this.setState({ message: "" });
+					}
+				}
+			}
+		}, {
+			key: 'getLogInStatus',
+			value: function getLogInStatus() {
+				return this.state.login;
+			}
+		}, {
+			key: 'loginSubmitHandler',
+			value: function loginSubmitHandler(event) {
+				event.preventDefault();
+				this.setState({ failedLogin: true });
+				console.log(this.state.user, this.state.pass);
+			}
+		}, {
+			key: 'loginFormHandler',
+			value: function loginFormHandler(event) {
+				var newState = {};
+				newState[event.target.id] = event.target.value;
+				this.setState(newState);
+			}
+		}, {
+			key: 'triggerModal',
+			value: function triggerModal() {
+				var modalState = { showModal: !this.state.modal.showModal, enable: true };
+
+				//Reset modal message states
+				this.setState({ message: "" });
+				this.setState({ failedLogin: false });
+
+				if (this.state.modal.enable) {
+					this.setState({ modal: modalState });
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var message = "error";
 
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(
-						_reactRouter.Link,
-						{ to: '/Admin' },
+						'h5',
+						{ className: 'text-right' },
 						_react2.default.createElement(
-							'h5',
-							{ className: 'text-right' },
-							'Admin Login'
+							'a',
+							{ href: '#', onClick: this.triggerModal },
+							' Admin Log In '
 						)
 					),
 					_react2.default.createElement(
@@ -26694,7 +26756,80 @@
 						{ className: 'text-center' },
 						'Coding-Challenge-Survey'
 					),
-					this.props.children
+					_react2.default.createElement(
+						_reactBootstrap.Modal,
+						{ show: this.state.modal.showModal, onHide: this.triggerModal },
+						_react2.default.createElement(
+							_reactBootstrap.Modal.Header,
+							{ closeButton: true },
+							_react2.default.createElement(
+								_reactBootstrap.Modal.Title,
+								null,
+								'Log In to Admin Panel'
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Modal.Body,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Form,
+								{ onSubmit: this.loginSubmitHandler, onChange: this.loginFormHandler },
+								_react2.default.createElement(
+									_reactBootstrap.FormGroup,
+									null,
+									_react2.default.createElement(
+										_reactBootstrap.ControlLabel,
+										null,
+										'Username'
+									),
+									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'user', placeholder: 'Username' })
+								),
+								_react2.default.createElement(
+									_reactBootstrap.FormGroup,
+									null,
+									_react2.default.createElement(
+										_reactBootstrap.ControlLabel,
+										null,
+										'Password'
+									),
+									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', id: 'pass', placeholder: 'Password' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'text-center' },
+									_react2.default.createElement(
+										_reactBootstrap.FormGroup,
+										{ validationState: 'error' },
+										_react2.default.createElement(
+											_reactBootstrap.HelpBlock,
+											null,
+											_react2.default.createElement(
+												'h2',
+												null,
+												this.state.message
+											)
+										)
+									)
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Row,
+									null,
+									_react2.default.createElement(
+										'div',
+										{ className: 'text-center' },
+										_react2.default.createElement(
+											_reactBootstrap.Button,
+											{ bsStyle: 'success', bsSize: 'large', type: 'submit' },
+											'Go!'
+										)
+									)
+								)
+							)
+						)
+					),
+					_react2.default.cloneElement(this.props.children, {
+						adminLogIn: this.getLogInStatus
+					})
 				);
 			}
 		}]);
@@ -26752,27 +26887,34 @@
 					id: ''
 				},
 				selection: -1
-
 			};
 
 			//Bind functions here
 			_this.handleFormChange = _this.handleFormChange.bind(_this);
 			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
-
 			return _this;
 		}
 
 		_createClass(Home, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
 				var _this2 = this;
 
+				//this.setState({login:this.props.adminLogIn()});
+
 				_utils2.default.getQuestion().then(function (data) {
-					console.log(data[0]);
 					var newObj = {
 						question: data[0].question,
 						answers: data[0].answers,
 						id: data[0].id
+
+					};
+					_this2.setState({ survey: newObj });
+				}).catch(function (error) {
+					var newObj = {
+						question: '',
+						answers: [],
+						id: ''
 
 					};
 					_this2.setState({ survey: newObj });
@@ -26804,14 +26946,105 @@
 		}, {
 			key: 'handleFormChange',
 			value: function handleFormChange(event) {
-				console.log(this.state);
+				// console.log(this.state);
 				this.setState({ selection: parseInt(event.target.id) });
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				//functions
+				var handleFormChange = this.handleFormChange;
+				var handleFormSubmit = this.handleFormSubmit;
+
+				//variables
 				var question = this.state.survey.question;
 				var answers = this.state.survey.answers;
+
+				function noQuestions(props) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ sm: 12 },
+							_react2.default.createElement(
+								'h2',
+								null,
+								'Thank you, but all questions have been answered!'
+							),
+							_react2.default.createElement(
+								'h2',
+								null,
+								'Please try again later'
+							)
+						)
+					);
+				}
+
+				function showQuestions() {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ sm: 12 },
+							_react2.default.createElement(
+								'h2',
+								{ className: 'text-center' },
+								question
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ sm: 12 },
+							_react2.default.createElement(
+								_reactBootstrap.Form,
+								{ onChange: handleFormChange, onSubmit: handleFormSubmit },
+								answers.map(function (val, index) {
+									return _react2.default.createElement(
+										'h3',
+										{ key: index },
+										_react2.default.createElement(
+											_reactBootstrap.Radio,
+											{ id: val.id, name: 'radioGroup' },
+											val.answer,
+											' --- ',
+											val.responses
+										)
+									);
+								}),
+								_react2.default.createElement(
+									'div',
+									{ className: 'text-center' },
+									_react2.default.createElement(
+										_reactBootstrap.Button,
+										{ type: 'submit', bsStyle: 'primary', bsSize: 'lg' },
+										' Submit '
+									)
+								)
+							)
+						)
+					);
+				}
+
+				//Conditional Rendering if there are questions avaliable
+				function displaySurvey() {
+					if (question === '') {
+
+						return _react2.default.createElement(
+							'div',
+							null,
+							noQuestions()
+						);
+					} else {
+						return _react2.default.createElement(
+							'div',
+							null,
+							showQuestions()
+						);
+					}
+				}
+
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -26819,50 +27052,17 @@
 						_reactBootstrap.Grid,
 						null,
 						_react2.default.createElement(
-							_reactBootstrap.Row,
+							_reactBootstrap.Jumbotron,
 							null,
-							_react2.default.createElement(
-								_reactBootstrap.Col,
-								{ sm: 12 },
-								_react2.default.createElement(
-									'h2',
-									{ className: 'text-center' },
-									'Welcome'
-								)
-							),
 							_react2.default.createElement(
 								_reactBootstrap.Row,
 								null,
 								_react2.default.createElement(
-									_reactBootstrap.Col,
-									{ sm: 12 },
-									_react2.default.createElement(
-										'h2',
-										{ className: 'text-center' },
-										question
-									)
-								),
-								_react2.default.createElement(
-									_reactBootstrap.Col,
-									{ sm: 12 },
-									_react2.default.createElement(
-										_reactBootstrap.Form,
-										{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
-										answers.map(function (val, index) {
-											return _react2.default.createElement(
-												_reactBootstrap.Radio,
-												{ key: index, id: val.id, name: 'radioGroup' },
-												val.answer,
-												' --- ',
-												val.responses
-											);
-										}),
-										_react2.default.createElement(
-											_reactBootstrap.Button,
-											{ type: 'submit', bsStyle: 'primary' },
-											' Submit '
-										)
-									)
+									'div',
+									null,
+									' ',
+									displaySurvey(),
+									' '
 								)
 							)
 						)
@@ -47534,7 +47734,101 @@
 
 	var _reactBootstrap = __webpack_require__(236);
 
-	var _reactRouterBootstrap = __webpack_require__(517);
+	var _reactRouter = __webpack_require__(178);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
+
+
+	var ThankYou = function (_Component) {
+		_inherits(ThankYou, _Component);
+
+		function ThankYou(props) {
+			_classCallCheck(this, ThankYou);
+
+			var _this = _possibleConstructorReturn(this, (ThankYou.__proto__ || Object.getPrototypeOf(ThankYou)).call(this, props));
+
+			_this.state = {};
+
+			//Bind functions here
+			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+
+			return _this;
+		}
+
+		_createClass(ThankYou, [{
+			key: 'handleFormSubmit',
+			value: function handleFormSubmit(event) {
+				_reactRouter.hashHistory.push('/');
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Grid,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 12 },
+								_react2.default.createElement(
+									'h2',
+									{ className: 'text-center' },
+									'Thank You For Your Submission!'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'div',
+									{ className: 'text-center' },
+									_react2.default.createElement(
+										_reactBootstrap.Button,
+										{ onClick: this.handleFormSubmit, bsStyle: 'primary', bsSize: 'lg' },
+										' Try Another Question '
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ThankYou;
+	}(_react.Component);
+
+	exports.default = ThankYou;
+
+/***/ },
+/* 514 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(236);
+
+	var _reactRouterBootstrap = __webpack_require__(515);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47642,219 +47936,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 514 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Error = function (_Component) {
-		_inherits(Error, _Component);
-
-		function Error() {
-			_classCallCheck(this, Error);
-
-			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
-		}
-
-		_createClass(Error, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h2',
-						null,
-						'NOT FOUND'
-					)
-				);
-			}
-		}]);
-
-		return Error;
-	}(_react.Component);
-
-	exports.default = Error;
-
-/***/ },
 /* 515 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(236);
-
-	var _utils = __webpack_require__(487);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
-
-
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
-
-		function Home(props) {
-			_classCallCheck(this, Home);
-
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
-
-			_this.state = {};
-
-			//Bind functions here
-			//this.handleFormChange = this.handleFormChange.bind(this);
-			//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-
-
-			return _this;
-		}
-
-		_createClass(Home, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate(prevProps, prevState) {}
-		}, {
-			key: 'handleFormSubmit',
-			value: function handleFormSubmit(event) {}
-		}, {
-			key: 'handleFormChange',
-			value: function handleFormChange(event) {}
-		}, {
-			key: 'render',
-			value: function render() {
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						_reactBootstrap.Grid,
-						null,
-						_react2.default.createElement(
-							_reactBootstrap.Row,
-							null,
-							_react2.default.createElement(
-								_reactBootstrap.Col,
-								{ sm: 12 },
-								_react2.default.createElement(
-									'h2',
-									{ className: 'text-center' },
-									'Thank You For Your Submission!'
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return Home;
-	}(_react.Component);
-
-	exports.default = Home;
-
-/***/ },
-/* 516 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(178);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Error = function (_Component) {
-		_inherits(Error, _Component);
-
-		function Error() {
-			_classCallCheck(this, Error);
-
-			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
-		}
-
-		_createClass(Error, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h2',
-						null,
-						'There was a problem submitting your answer'
-					),
-					_react2.default.createElement(
-						'h3',
-						null,
-						_react2.default.createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							'Click here '
-						),
-						'to return to the main page'
-					)
-				);
-			}
-		}]);
-
-		return Error;
-	}(_react.Component);
-
-	exports.default = Error;
-
-/***/ },
-/* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47862,11 +47944,11 @@
 	exports.__esModule = true;
 	exports.LinkContainer = exports.IndexLinkContainer = undefined;
 
-	var _IndexLinkContainer2 = __webpack_require__(518);
+	var _IndexLinkContainer2 = __webpack_require__(516);
 
 	var _IndexLinkContainer3 = _interopRequireDefault(_IndexLinkContainer2);
 
-	var _LinkContainer2 = __webpack_require__(519);
+	var _LinkContainer2 = __webpack_require__(517);
 
 	var _LinkContainer3 = _interopRequireDefault(_LinkContainer2);
 
@@ -47876,7 +47958,7 @@
 	exports.LinkContainer = _LinkContainer3.default;
 
 /***/ },
-/* 518 */
+/* 516 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47889,7 +47971,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LinkContainer = __webpack_require__(519);
+	var _LinkContainer = __webpack_require__(517);
 
 	var _LinkContainer2 = _interopRequireDefault(_LinkContainer);
 
@@ -47925,7 +48007,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 519 */
+/* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48060,7 +48142,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 520 */
+/* 518 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48117,63 +48199,88 @@
 
 				_utils2.default.getResults().then(function (results) {
 					if (results.status === 200) {
-						console.log(results.data);
+						//console.log(results.data);
 						_this2.setState({ results: results.data });
 					}
+				}).catch(function (error) {
+					_this2.setState({ results: {} });
 				});
 			}
 		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate(prevProps, prevState) {}
-		}, {
-			key: 'handleFormSubmit',
-			value: function handleFormSubmit(event) {}
-		}, {
-			key: 'handleFormChange',
-			value: function handleFormChange(event) {}
-		}, {
 			key: 'render',
 			value: function render() {
-				function Results(props) {
-					var results = props.results;
+				var results = this.state.results;
+
+				function displayResults() {
 					return _react2.default.createElement(
 						'div',
-						null,
+						{ className: 'questionResults' },
 						results.map(function (questions, indexQuest) {
 							return _react2.default.createElement(
 								'div',
 								{ key: indexQuest },
 								_react2.default.createElement(
-									'h2',
-									null,
-									questions.question
-								),
-								questions.answers.map(function (answers, indexAns) {
-									return _react2.default.createElement(
+									_reactBootstrap.Jumbotron,
+									{ className: 'questionBox' },
+									_react2.default.createElement(
 										'div',
-										{ key: indexAns },
+										{ className: 'questionTitle' },
+										questions.question
+									),
+									_react2.default.createElement(
+										_reactBootstrap.Row,
+										null,
 										_react2.default.createElement(
-											'h4',
-											null,
-											answers.answer,
-											' --- ',
-											answers.responses
+											_reactBootstrap.Col,
+											{ sm: 1 },
+											' ',
+											_react2.default.createElement(
+												'div',
+												{ className: 'answerKey' },
+												'Results'
+											)
 										)
-									);
-								})
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'answerList' },
+										questions.answers.map(function (answers, indexAns) {
+											return _react2.default.createElement(
+												'div',
+												{ key: indexAns },
+												_react2.default.createElement(
+													_reactBootstrap.Row,
+													null,
+													_react2.default.createElement(
+														_reactBootstrap.Col,
+														{ sm: 8 },
+														' ',
+														answers.answer
+													),
+													_react2.default.createElement(
+														_reactBootstrap.Col,
+														{ sm: 2 },
+														' ',
+														answers.responses
+													)
+												)
+											);
+										})
+									)
+								)
 							);
 						})
 					);
 				}
 
-				function Error() {
+				function errorResults() {
 					return _react2.default.createElement(
 						'div',
 						null,
 						_react2.default.createElement(
 							'h1',
 							{ className: 'text-center' },
-							'There Was an Error Getting the Results '
+							'There Are No Questions'
 						),
 						_react2.default.createElement(
 							'h1',
@@ -48183,11 +48290,22 @@
 					);
 				}
 
-				function GetResults(props) {
-					if (props.results.length > 0) {
-						return _react2.default.createElement(Results, { results: props.results });
+				//Conditional Rendering if there are questions avaliable
+				function getResults() {
+					if (results.length > 0) {
+						return _react2.default.createElement(
+							'div',
+							null,
+							displayResults(),
+							' '
+						);
 					} else {
-						return _react2.default.createElement(Error, null);
+						return _react2.default.createElement(
+							'div',
+							null,
+							errorResults(),
+							' '
+						);
 					}
 				}
 
@@ -48204,11 +48322,17 @@
 								_reactBootstrap.Col,
 								{ sm: 12 },
 								_react2.default.createElement(
-									'h2',
+									'h1',
 									{ className: 'text-center' },
 									'Survey Results'
 								),
-								_react2.default.createElement(GetResults, { results: this.state.results })
+								_react2.default.createElement(
+									'div',
+									null,
+									' ',
+									getResults(),
+									' '
+								)
 							)
 						)
 					)
@@ -48222,7 +48346,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 521 */
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48342,49 +48466,58 @@
 									'div',
 									null,
 									_react2.default.createElement(
+										'h1',
+										{ className: 'text-center' },
+										'Add A Question'
+									),
+									_react2.default.createElement(
 										_reactBootstrap.Form,
 										{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
 										_react2.default.createElement(
-											_reactBootstrap.FormGroup,
+											_reactBootstrap.Jumbotron,
 											null,
-											_react2.default.createElement(
-												_reactBootstrap.ControlLabel,
-												null,
-												'Enter a Question'
-											),
-											_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'question' })
-										),
-										_react2.default.createElement(
-											'div',
-											{ id: 'dynamicInput' },
 											_react2.default.createElement(
 												_reactBootstrap.FormGroup,
 												null,
 												_react2.default.createElement(
 													_reactBootstrap.ControlLabel,
 													null,
-													'Enter Answers'
+													'Enter a Question'
 												),
-												this.state.answers.map(function (answer, index) {
+												_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'question' })
+											),
+											_react2.default.createElement(
+												'div',
+												{ id: 'dynamicInput' },
+												_react2.default.createElement(
+													_reactBootstrap.FormGroup,
+													null,
+													_react2.default.createElement(
+														_reactBootstrap.ControlLabel,
+														null,
+														'Enter Answers'
+													),
+													this.state.answers.map(function (answer, index) {
 
-													return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
-												})
-											)
-										),
-										_react2.default.createElement(
-											_reactBootstrap.Button,
-											{ bsStyle: 'primary', onClick: function onClick() {
-													return _this2.addAnswer();
-												} },
-											'Add Another Answer'
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'text-center' },
+														return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
+													})
+												)
+											),
 											_react2.default.createElement(
 												_reactBootstrap.Button,
-												{ bsStyle: 'success', type: 'submit' },
-												'Submit Question'
+												{ bsStyle: 'primary', onClick: function onClick() {
+														return _this2.addAnswer();
+													} },
+												'Add Another Answer'
+											),
+											_react2.default.createElement(
+												'div',
+												{ className: 'text-center' },
+												_react2.default.createElement(
+													_reactBootstrap.Button,
+													{ bsStyle: 'success', type: 'submit' },
+													'Submit Question'
+												)
 											)
 										)
 									)
@@ -48402,7 +48535,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 522 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48454,8 +48587,8 @@
 		}
 
 		_createClass(Home, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
 				var _this2 = this;
 
 				_utils2.default.getResults().then(function (results) {
@@ -48498,10 +48631,9 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var questions = this.state.results;
-
-				function Questions(props) {
-					var results = props.state.results;
+				var results = this.state.results;
+				console.log(results);
+				function questions() {
 					return _react2.default.createElement(
 						'div',
 						null,
@@ -48514,7 +48646,7 @@
 									{ key: indexQuest },
 									_react2.default.createElement(
 										_reactBootstrap.Checkbox,
-										{ id: indexQuest.toString(), checked: props.state.status[indexQuest], onChange: function onChange() {} },
+										{ id: indexQuest.toString() },
 										questions.question
 									)
 								);
@@ -48523,14 +48655,14 @@
 					);
 				}
 
-				function Error() {
+				function errorResults() {
 					return _react2.default.createElement(
 						'div',
 						null,
 						_react2.default.createElement(
 							'h1',
 							{ className: 'text-center' },
-							'There Was an Error Getting the Questions '
+							'There Are No Questions '
 						),
 						_react2.default.createElement(
 							'h1',
@@ -48540,13 +48672,25 @@
 					);
 				}
 
-				function GetQuestions(props) {
-					if (props.state.results.length > 0) {
-						return _react2.default.createElement(Questions, { state: props.state });
+				//Conditional Rendering if there are questions avaliable
+				function getQuestions() {
+					if (results.length > 0) {
+						return _react2.default.createElement(
+							'div',
+							null,
+							questions(),
+							' '
+						);
 					} else {
-						return _react2.default.createElement(Error, null);
+						return _react2.default.createElement(
+							'div',
+							null,
+							errorResults(),
+							' '
+						);
 					}
 				}
+
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -48567,7 +48711,12 @@
 								_react2.default.createElement(
 									_reactBootstrap.Form,
 									{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
-									_react2.default.createElement(GetQuestions, { state: this.state }),
+									_react2.default.createElement(
+										'div',
+										null,
+										getQuestions(),
+										' '
+									),
 									_react2.default.createElement(
 										_reactBootstrap.Button,
 										{ type: 'submit', bsStyle: 'primary' },
@@ -48587,7 +48736,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 523 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48676,6 +48825,124 @@
 	}(_react.Component);
 
 	exports.default = Home;
+
+/***/ },
+/* 522 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Error = function (_Component) {
+		_inherits(Error, _Component);
+
+		function Error() {
+			_classCallCheck(this, Error);
+
+			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
+		}
+
+		_createClass(Error, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h2',
+						null,
+						'NOT FOUND'
+					)
+				);
+			}
+		}]);
+
+		return Error;
+	}(_react.Component);
+
+	exports.default = Error;
+
+/***/ },
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(178);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Error = function (_Component) {
+		_inherits(Error, _Component);
+
+		function Error() {
+			_classCallCheck(this, Error);
+
+			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
+		}
+
+		_createClass(Error, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h2',
+						null,
+						'There was a problem submitting your answer'
+					),
+					_react2.default.createElement(
+						'h3',
+						null,
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/' },
+							'Click here '
+						),
+						'to return to the main page'
+					)
+				);
+			}
+		}]);
+
+		return Error;
+	}(_react.Component);
+
+	exports.default = Error;
 
 /***/ }
 /******/ ]);

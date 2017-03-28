@@ -7,6 +7,24 @@
 body{
 	height: 100%;
 }
+.questionBox{
+	color:#ffffff;
+	background-color: #000033;
+}
+.questionTitle{
+	font-size: 30px;
+	border-bottom: 5px #ff8000 solid;
+}
+.answerList{
+	font-size: 18px;
+	padding: 10px 0px ;
+}
+.answerKey{
+	padding-top:10px;
+	font-size: 24px;
+	
+}
+
 
 
 /* --- MEDIA SCREEN --- */

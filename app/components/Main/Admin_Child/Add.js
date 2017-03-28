@@ -1,6 +1,6 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid, Form, Button, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import { Row, Col, Grid, Form, Button, FormControl, FormGroup, ControlLabel, Jumbotron} from 'react-bootstrap';
 import Utils from '../../Utils/utils';
 import {hashHistory} from 'react-router';
 
@@ -82,11 +82,14 @@ class Home extends Component{
 		return (
 			
 			<div>
+			
 				<Grid>
 					<Row>
 						<Col sm={12}>
 							<div>
+							<h1 className="text-center">Add A Question</h1>
 							<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
+							<Jumbotron>
 								<FormGroup>
 									<ControlLabel>Enter a Question</ControlLabel>
 									<FormControl type="text" id="question" />
@@ -112,11 +115,13 @@ class Home extends Component{
 								Submit Question
 							</Button>
 							</div>
+							</Jumbotron>
 							</Form>
 						</div>
 						</Col>
 					</Row>
 				</Grid>
+				
       		</div>
 		);
 	}

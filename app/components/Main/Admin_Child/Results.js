@@ -1,6 +1,6 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid} from 'react-bootstrap';
+import { Row, Col, Grid, Jumbotron} from 'react-bootstrap';
 import Utils from '../../Utils/utils';
 
 class Home extends Component{
@@ -21,43 +21,43 @@ class Home extends Component{
 	componentWillMount(){
 		Utils.getResults().then((results)=>{
 			if(results.status === 200){
-				console.log(results.data);
+				//console.log(results.data);
 				this.setState({results:results.data});
 			}
 
 		})
-	}
-
-	componentDidUpdate(prevProps, prevState){
-		
-	}
-
-
-	
-	handleFormSubmit(event){
-		
-	}
-	
-	handleFormChange(event){
-		
+		.catch((error) => {
+			this.setState({results:{}});
+		})
 	}
 
 	render(){
-		function Results(props){
-			let results = props.results;
+		const results = this.state.results;
+
+		function displayResults(){
 			return (
-				<div>
+				<div className="questionResults">
 					{results.map((questions, indexQuest) => {
 						return (
 							<div key={indexQuest}>
-								<h2>{questions.question}</h2>
-								{questions.answers.map((answers, indexAns) =>{
-									return(
-										<div key={indexAns}>
-											<h4>{answers.answer} --- {answers.responses}</h4>
-										</div>
-									);
-								})}
+								<Jumbotron className="questionBox">
+								<div className="questionTitle">{questions.question}</div>
+								<Row>
+									<Col sm={1}> <div className="answerKey">Results</div></Col>
+								</Row>
+								<div className="answerList">
+									{questions.answers.map((answers, indexAns) =>{
+										return(
+											<div key={indexAns}>
+												<Row>
+													<Col sm={8}> {answers.answer}</Col>
+													<Col sm={2}> {answers.responses}</Col>
+												</Row>
+											</div>
+										);
+									})}
+								</div>
+								</Jumbotron>
 							</div>
 						);
 					})}
@@ -65,21 +65,22 @@ class Home extends Component{
 			)
 		}
 
-		function Error(){
+		function errorResults(){
 			return (
 				<div>
-					<h1 className="text-center">There Was an Error Getting the Results </h1>
+					<h1 className="text-center">There Are No Questions</h1>
 					<h1 className="text-center"> Please Try Again Later!</h1>
 				</div>
 			)
 		}
 
-		function GetResults(props){
-			if(props.results.length>0){
-				return <Results results={props.results} />
+		//Conditional Rendering if there are questions avaliable
+		function getResults(){
+			if(results.length>0){
+				return <div>{displayResults()} </div>
 			}
 			else{
-				return <Error />
+				return <div>{errorResults()} </div>
 			}
 		}
 		
@@ -89,8 +90,8 @@ class Home extends Component{
 				<Grid>
 					<Row>
 						<Col sm={12}>
-							<h2 className="text-center">Survey Results</h2>
-							<GetResults results={this.state.results} />
+							<h1 className="text-center">Survey Results</h1>
+							<div> {getResults()} </div>
 						</Col>
 					</Row>
 				</Grid>

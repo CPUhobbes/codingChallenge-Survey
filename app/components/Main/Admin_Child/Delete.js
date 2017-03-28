@@ -18,7 +18,7 @@ class Home extends Component{
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
   	}
 	
-	componentWillMount(){
+	componentDidMount(){
 		Utils.getResults().then((results)=>{
 			if(results.status === 200){
 				this.setState({results:results.data});
@@ -57,17 +57,16 @@ class Home extends Component{
 	}
 
 	render(){
-		let questions = this.state.results;
-
-		function Questions(props){
-			let results = props.state.results;
+		let results = this.state.results;
+		console.log(results);
+		function questions(){
 			return (
 				<div>
 					<FormGroup>
 					{results.map((questions, indexQuest) => {
 						return (
 							<div key={indexQuest}>
-								<Checkbox id={indexQuest.toString()} checked={props.state.status[indexQuest]} onChange={()=>{}}>
+								<Checkbox id={indexQuest.toString()} >
 									{questions.question}
 								</Checkbox>
 							</div>
@@ -78,32 +77,33 @@ class Home extends Component{
 			)
 		}
 
-		function Error(){
+		function errorResults(){
 			return (
 				<div>
-					<h1 className="text-center">There Was an Error Getting the Questions </h1>
+					<h1 className="text-center">There Are No Questions </h1>
 					<h1 className="text-center"> Please Try Again Later!</h1>
 				</div>
 			)
 		}
 
-		function GetQuestions(props){
-			if(props.state.results.length>0){
-				return <Questions state={props.state} />
+		//Conditional Rendering if there are questions avaliable
+		function getQuestions(){
+			if(results.length>0){
+				return <div>{questions()} </div>
 			}
 			else{
-				return <Error />
+				return <div>{errorResults()} </div>
 			}
 		}
+
 		return (
-			
 			<div>
 				<Grid>
 					<Row>
 						<Col sm={12}>
 							<h2>Delete Questions</h2>
 							<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
-								<GetQuestions state={this.state} />
+								<div>{getQuestions()} </div>
 								<Button type='submit' bsStyle='primary'> Submit </Button>
 							</Form>
 						</Col>
