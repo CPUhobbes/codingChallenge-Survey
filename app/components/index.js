@@ -2,7 +2,7 @@
 import React, { Component} from 'react';
 import {Link} from 'react-router';
 import { Row, Col, Grid, Form, Radio, Button, Modal, HelpBlock, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-
+import {hashHistory} from 'react-router';
 
 class Index extends Component {
 
@@ -18,7 +18,9 @@ class Index extends Component {
 			login: false,
 			failedLogin:false,
 			user:"",
-			pass:""
+			pass:"",
+			adminCred:{user:"admin", pass:"pass"}
+
 
 		}
 		//Bind functions here
@@ -49,7 +51,16 @@ class Index extends Component {
 	loginSubmitHandler(event){
 		event.preventDefault();
 		this.setState({failedLogin:true});
-		console.log(this.state.user, this.state.pass);
+
+		if(this.state.user===this.state.adminCred.user && this.state.pass === this.state.adminCred.pass){
+			hashHistory.push({
+				pathname: '/Admin',
+				state: {login:this.state.login }
+			})
+		}
+		else{
+			console.log("no")
+		}
 
 	}
 

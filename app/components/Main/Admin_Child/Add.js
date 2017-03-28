@@ -4,7 +4,7 @@ import { Row, Col, Grid, Form, Button, FormControl, FormGroup, ControlLabel, Jum
 import Utils from '../../Utils/utils';
 import {hashHistory} from 'react-router';
 
-class Home extends Component{
+class Add extends Component{
 	constructor(props) {
 		super(props);
 
@@ -82,42 +82,37 @@ class Home extends Component{
 		return (
 			
 			<div>
-			
 				<Grid>
 					<Row>
 						<Col sm={12}>
-							<div>
 							<h1 className="text-center">Add A Question</h1>
 							<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
-							<Jumbotron>
-								<FormGroup>
-									<ControlLabel>Enter a Question</ControlLabel>
-									<FormControl type="text" id="question" />
-								</FormGroup>
-
-								<div id="dynamicInput">
+								<Jumbotron>
 									<FormGroup>
-										<ControlLabel>Enter Answers</ControlLabel>
-									{this.state.answers.map((answer, index) => {
-										
-										return(
-											<FormControl type="text" key={index} id={index.toString()} />
-										)
-									})}
+										<ControlLabel>Enter a Question</ControlLabel>
+										<FormControl type="text" id="question" />
 									</FormGroup>
-								</div>
-							<Button bsStyle="primary" onClick={ () => this.addAnswer() }>
-								Add Another Answer
-							</Button>
-							
-							<div className="text-center">
-							<Button bsStyle="success" type="submit">
-								Submit Question
-							</Button>
-							</div>
-							</Jumbotron>
+
+									<div id="dynamicInput">
+										<FormGroup>
+											<ControlLabel>Enter Answers</ControlLabel>
+										{this.state.answers.map((answer, index) => {
+											
+											return(
+												<FormControl type="text" key={index} id={index.toString()} />
+											)
+										})}
+										</FormGroup>
+									</div>
+									<Button bsStyle="primary" onClick={ () => this.addAnswer() }>
+										Add Another Answer
+									</Button>
+									
+									<div className="text-center buttonMargin">
+										<Button bsStyle="success" type="submit" bsSize='lg'>Submit Question</Button>
+									</div>
+								</Jumbotron>
 							</Form>
-						</div>
 						</Col>
 					</Row>
 				</Grid>
@@ -127,4 +122,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default Add;

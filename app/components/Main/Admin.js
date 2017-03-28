@@ -1,34 +1,51 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid, Nav, Navbar, NavItem} from 'react-bootstrap';
+import { Row, Col, Grid, Nav, Navbar, NavItem, Button} from 'react-bootstrap';
 import {IndexLinkContainer} from 'react-router-bootstrap';
+import {hashHistory} from 'react-router';
 
-class Home extends Component{
+class Admin extends Component{
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			
+			login:false
 		};
 
 		//Bind functions here
 
   	}
-	
-	handleFormSubmit(event){
+	componentWillMount(){
+		if(typeof this.props.location.state!== 'undefined'){
+			this.setState({login:this.props.location.state})
+		}
+		else{
+			this.setState({login:false});
+		}
+		
+		
 
+	}
+
+	componentDidMount(){
+
+	}
+	handleFormSubmit(event){
+		hashHistory.push('/');
 	}
 	
 	handleFormChange(event){
 	}
 
 	render(){
+		const children = this.props.children;
+		const login = this.state.login;
+		const handleSubmit =this.handleFormSubmit
 
-		return (
-			
-			<div>
-				    
-				<Navbar>
+		function showAdmin(){
+			return (
+				<div>
+					<Navbar>
 					<Navbar.Header>
 						<Navbar.Brand>
 							Admin Panel
@@ -51,13 +68,44 @@ class Home extends Component{
 								<NavItem eventKey={4} >Back to Survey</NavItem>
 							</IndexLinkContainer>
 						</Nav>
-						
 					</Navbar.Collapse>
-
 				</Navbar>
 
 				{/*Render component children, important!!*/}
-				{this.props.children}
+				{children}
+				</div>
+
+			);
+
+		}
+
+		function showError(){
+			return (
+				<div>
+					<h2 className="text-center">You do not have the Credentials</h2>
+					<div className="text-center">
+						<Button bsStyle="success" bsSize="large" onClick={handleSubmit}>Go To Main Page!</Button>
+					</div>
+				</div>
+			)
+		}
+
+		//Login validation
+		function checkLogin(){
+			if(login){
+				return <div>{showAdmin()}</div>
+			}
+			else{
+				return <div>{showError()}</div>
+			}
+
+		}
+
+		return (
+			
+			<div>
+				    
+			<div>{checkLogin()}</div>
 		  	
 
 		  	</div> 
@@ -65,4 +113,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default Admin;

@@ -1,10 +1,10 @@
 //Import Packages
 import React, { Component } from 'react';
-import { Row, Col, Grid, Form,Checkbox, Button, FormGroup} from 'react-bootstrap';
+import { Row, Col, Grid, Form,Checkbox, Button, FormGroup, Jumbotron} from 'react-bootstrap';
 import Utils from '../../Utils/utils';
 import {hashHistory} from 'react-router';
 
-class Home extends Component{
+class Delete extends Component{
 	constructor(props) {
 		super(props);
 
@@ -58,18 +58,18 @@ class Home extends Component{
 
 	render(){
 		let results = this.state.results;
-		console.log(results);
+
 		function questions(){
 			return (
 				<div>
 					<FormGroup>
 					{results.map((questions, indexQuest) => {
 						return (
-							<div key={indexQuest}>
+							<h3 key={indexQuest}> 
 								<Checkbox id={indexQuest.toString()} >
 									{questions.question}
 								</Checkbox>
-							</div>
+							</h3>
 						);
 					})}
 					</FormGroup>
@@ -101,11 +101,17 @@ class Home extends Component{
 				<Grid>
 					<Row>
 						<Col sm={12}>
-							<h2>Delete Questions</h2>
-							<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
-								<div>{getQuestions()} </div>
-								<Button type='submit' bsStyle='primary'> Submit </Button>
-							</Form>
+							<div>
+								<h1 className="text-center">Delete Questions</h1>
+								<Form onChange={this.handleFormChange} onSubmit={this.handleFormSubmit}>
+									<Jumbotron>
+										<div>{getQuestions()} </div>
+										<div className="text-center buttonMargin">
+											<Button type='submit' bsStyle='primary' bsSize='lg'> Submit </Button>
+										</div>
+									</Jumbotron>
+								</Form>
+							</div>
 						</Col>
 					</Row>
 				</Grid>
@@ -114,4 +120,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default Delete;

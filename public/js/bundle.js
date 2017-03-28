@@ -26678,7 +26678,8 @@
 				login: false,
 				failedLogin: false,
 				user: "",
-				pass: ""
+				pass: "",
+				adminCred: { user: "admin", pass: "pass" }
 
 			};
 			//Bind functions here
@@ -26712,7 +26713,15 @@
 			value: function loginSubmitHandler(event) {
 				event.preventDefault();
 				this.setState({ failedLogin: true });
-				console.log(this.state.user, this.state.pass);
+
+				if (this.state.user === this.state.adminCred.user && this.state.pass === this.state.adminCred.pass) {
+					_reactRouter.hashHistory.push({
+						pathname: '/Admin',
+						state: { login: this.state.login }
+					});
+				} else {
+					console.log("no");
+				}
 			}
 		}, {
 			key: 'loginFormHandler',
@@ -47830,6 +47839,8 @@
 
 	var _reactRouterBootstrap = __webpack_require__(515);
 
+	var _reactRouter = __webpack_require__(178);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47839,101 +47850,170 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
+	var Admin = function (_Component) {
+		_inherits(Admin, _Component);
 
-		function Home(props) {
-			_classCallCheck(this, Home);
+		function Admin(props) {
+			_classCallCheck(this, Admin);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this, props));
 
-			_this.state = {};
+			_this.state = {
+				login: false
+			};
 
 			//Bind functions here
 
 			return _this;
 		}
 
-		_createClass(Home, [{
+		_createClass(Admin, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				if (typeof this.props.location.state !== 'undefined') {
+					this.setState({ login: this.props.location.state });
+				} else {
+					this.setState({ login: false });
+				}
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {}
+		}, {
 			key: 'handleFormSubmit',
-			value: function handleFormSubmit(event) {}
+			value: function handleFormSubmit(event) {
+				_reactRouter.hashHistory.push('/');
+			}
 		}, {
 			key: 'handleFormChange',
 			value: function handleFormChange(event) {}
 		}, {
 			key: 'render',
 			value: function render() {
+				var children = this.props.children;
+				var login = this.state.login;
+				var handleSubmit = this.handleFormSubmit;
+
+				function showAdmin() {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Navbar,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Navbar.Header,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Navbar.Brand,
+									null,
+									'Admin Panel'
+								),
+								_react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Navbar.Collapse,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Nav,
+									null,
+									_react2.default.createElement(
+										_reactRouterBootstrap.IndexLinkContainer,
+										{ to: "/Admin", activeHref: 'active' },
+										_react2.default.createElement(
+											_reactBootstrap.NavItem,
+											{ eventKey: 1 },
+											'Results'
+										)
+									),
+									_react2.default.createElement(
+										_reactRouterBootstrap.IndexLinkContainer,
+										{ to: "/Admin/Add" },
+										_react2.default.createElement(
+											_reactBootstrap.NavItem,
+											{ eventKey: 2 },
+											'Add Question'
+										)
+									),
+									_react2.default.createElement(
+										_reactRouterBootstrap.IndexLinkContainer,
+										{ to: "/Admin/Delete" },
+										_react2.default.createElement(
+											_reactBootstrap.NavItem,
+											{ eventKey: 3 },
+											'Delete Question'
+										)
+									),
+									_react2.default.createElement(
+										_reactRouterBootstrap.IndexLinkContainer,
+										{ to: "/" },
+										_react2.default.createElement(
+											_reactBootstrap.NavItem,
+											{ eventKey: 4 },
+											'Back to Survey'
+										)
+									)
+								)
+							)
+						),
+						children
+					);
+				}
+
+				function showError() {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h2',
+							{ className: 'text-center' },
+							'You do not have the Credentials'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'text-center' },
+							_react2.default.createElement(
+								_reactBootstrap.Button,
+								{ bsStyle: 'success', bsSize: 'large', onClick: handleSubmit },
+								'Go To Main Page!'
+							)
+						)
+					);
+				}
+
+				//Login validation
+				function checkLogin() {
+					if (login) {
+						return _react2.default.createElement(
+							'div',
+							null,
+							showAdmin()
+						);
+					} else {
+						return _react2.default.createElement(
+							'div',
+							null,
+							showError()
+						);
+					}
+				}
 
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(
-						_reactBootstrap.Navbar,
+						'div',
 						null,
-						_react2.default.createElement(
-							_reactBootstrap.Navbar.Header,
-							null,
-							_react2.default.createElement(
-								_reactBootstrap.Navbar.Brand,
-								null,
-								'Admin Panel'
-							),
-							_react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
-						),
-						_react2.default.createElement(
-							_reactBootstrap.Navbar.Collapse,
-							null,
-							_react2.default.createElement(
-								_reactBootstrap.Nav,
-								null,
-								_react2.default.createElement(
-									_reactRouterBootstrap.IndexLinkContainer,
-									{ to: "/Admin", activeHref: 'active' },
-									_react2.default.createElement(
-										_reactBootstrap.NavItem,
-										{ eventKey: 1 },
-										'Results'
-									)
-								),
-								_react2.default.createElement(
-									_reactRouterBootstrap.IndexLinkContainer,
-									{ to: "/Admin/Add" },
-									_react2.default.createElement(
-										_reactBootstrap.NavItem,
-										{ eventKey: 2 },
-										'Add Question'
-									)
-								),
-								_react2.default.createElement(
-									_reactRouterBootstrap.IndexLinkContainer,
-									{ to: "/Admin/Delete" },
-									_react2.default.createElement(
-										_reactBootstrap.NavItem,
-										{ eventKey: 3 },
-										'Delete Question'
-									)
-								),
-								_react2.default.createElement(
-									_reactRouterBootstrap.IndexLinkContainer,
-									{ to: "/" },
-									_react2.default.createElement(
-										_reactBootstrap.NavItem,
-										{ eventKey: 4 },
-										'Back to Survey'
-									)
-								)
-							)
-						)
-					),
-					this.props.children
+						checkLogin()
+					)
 				);
 			}
 		}]);
 
-		return Home;
+		return Admin;
 	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Admin;
 
 /***/ },
 /* 515 */
@@ -48378,13 +48458,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
+	var Add = function (_Component) {
+		_inherits(Add, _Component);
 
-		function Home(props) {
-			_classCallCheck(this, Home);
+		function Add(props) {
+			_classCallCheck(this, Add);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).call(this, props));
 
 			_this.state = {
 				question: "",
@@ -48405,7 +48485,7 @@
 			return _this;
 		}
 
-		_createClass(Home, [{
+		_createClass(Add, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {}
 		}, {
@@ -48463,61 +48543,57 @@
 								_reactBootstrap.Col,
 								{ sm: 12 },
 								_react2.default.createElement(
-									'div',
-									null,
+									'h1',
+									{ className: 'text-center' },
+									'Add A Question'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Form,
+									{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
 									_react2.default.createElement(
-										'h1',
-										{ className: 'text-center' },
-										'Add A Question'
-									),
-									_react2.default.createElement(
-										_reactBootstrap.Form,
-										{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
+										_reactBootstrap.Jumbotron,
+										null,
 										_react2.default.createElement(
-											_reactBootstrap.Jumbotron,
+											_reactBootstrap.FormGroup,
 											null,
+											_react2.default.createElement(
+												_reactBootstrap.ControlLabel,
+												null,
+												'Enter a Question'
+											),
+											_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'question' })
+										),
+										_react2.default.createElement(
+											'div',
+											{ id: 'dynamicInput' },
 											_react2.default.createElement(
 												_reactBootstrap.FormGroup,
 												null,
 												_react2.default.createElement(
 													_reactBootstrap.ControlLabel,
 													null,
-													'Enter a Question'
+													'Enter Answers'
 												),
-												_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'question' })
-											),
-											_react2.default.createElement(
-												'div',
-												{ id: 'dynamicInput' },
-												_react2.default.createElement(
-													_reactBootstrap.FormGroup,
-													null,
-													_react2.default.createElement(
-														_reactBootstrap.ControlLabel,
-														null,
-														'Enter Answers'
-													),
-													this.state.answers.map(function (answer, index) {
+												this.state.answers.map(function (answer, index) {
 
-														return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
-													})
-												)
-											),
+													return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
+												})
+											)
+										),
+										_react2.default.createElement(
+											_reactBootstrap.Button,
+											{ bsStyle: 'primary', onClick: function onClick() {
+													return _this2.addAnswer();
+												} },
+											'Add Another Answer'
+										),
+										_react2.default.createElement(
+											'div',
+											{ className: 'text-center buttonMargin' },
 											_react2.default.createElement(
 												_reactBootstrap.Button,
-												{ bsStyle: 'primary', onClick: function onClick() {
-														return _this2.addAnswer();
-													} },
-												'Add Another Answer'
-											),
-											_react2.default.createElement(
-												'div',
-												{ className: 'text-center' },
-												_react2.default.createElement(
-													_reactBootstrap.Button,
-													{ bsStyle: 'success', type: 'submit' },
-													'Submit Question'
-												)
+												{ bsStyle: 'success', type: 'submit', bsSize: 'lg' },
+												'Submit Question'
 											)
 										)
 									)
@@ -48529,10 +48605,10 @@
 			}
 		}]);
 
-		return Home;
+		return Add;
 	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Add;
 
 /***/ },
 /* 520 */
@@ -48567,13 +48643,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
+	var Delete = function (_Component) {
+		_inherits(Delete, _Component);
 
-		function Home(props) {
-			_classCallCheck(this, Home);
+		function Delete(props) {
+			_classCallCheck(this, Delete);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Delete.__proto__ || Object.getPrototypeOf(Delete)).call(this, props));
 
 			_this.state = {
 				results: {},
@@ -48586,7 +48662,7 @@
 			return _this;
 		}
 
-		_createClass(Home, [{
+		_createClass(Delete, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var _this2 = this;
@@ -48632,7 +48708,7 @@
 			key: 'render',
 			value: function render() {
 				var results = this.state.results;
-				console.log(results);
+
 				function questions() {
 					return _react2.default.createElement(
 						'div',
@@ -48642,7 +48718,7 @@
 							null,
 							results.map(function (questions, indexQuest) {
 								return _react2.default.createElement(
-									'div',
+									'h3',
 									{ key: indexQuest },
 									_react2.default.createElement(
 										_reactBootstrap.Checkbox,
@@ -48704,23 +48780,35 @@
 								_reactBootstrap.Col,
 								{ sm: 12 },
 								_react2.default.createElement(
-									'h2',
+									'div',
 									null,
-									'Delete Questions'
-								),
-								_react2.default.createElement(
-									_reactBootstrap.Form,
-									{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
 									_react2.default.createElement(
-										'div',
-										null,
-										getQuestions(),
-										' '
+										'h1',
+										{ className: 'text-center' },
+										'Delete Questions'
 									),
 									_react2.default.createElement(
-										_reactBootstrap.Button,
-										{ type: 'submit', bsStyle: 'primary' },
-										' Submit '
+										_reactBootstrap.Form,
+										{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
+										_react2.default.createElement(
+											_reactBootstrap.Jumbotron,
+											null,
+											_react2.default.createElement(
+												'div',
+												null,
+												getQuestions(),
+												' '
+											),
+											_react2.default.createElement(
+												'div',
+												{ className: 'text-center buttonMargin' },
+												_react2.default.createElement(
+													_reactBootstrap.Button,
+													{ type: 'submit', bsStyle: 'primary', bsSize: 'lg' },
+													' Submit '
+												)
+											)
+										)
 									)
 								)
 							)
@@ -48730,10 +48818,10 @@
 			}
 		}]);
 
-		return Home;
+		return Delete;
 	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Delete;
 
 /***/ },
 /* 521 */
