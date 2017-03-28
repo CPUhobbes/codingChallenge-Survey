@@ -19,6 +19,6 @@ Router.post('/api/questions/ipAddress/:questionId', Controllers.ipAddress.create
 
 Router.put('/api/questions/updateAnswer', Controllers.answers.updateCount);
 
-Router.delete('/api/questions/:questionId', Controllers.questions.deleteQuestion);
+Router.delete('/api/questions/', Controllers.questions.deleteQuestion);
 
 module.exports = Router;

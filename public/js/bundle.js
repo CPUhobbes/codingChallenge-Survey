@@ -26585,6 +26585,10 @@
 
 	var _Delete2 = _interopRequireDefault(_Delete);
 
+	var _Success = __webpack_require__(523);
+
+	var _Success2 = _interopRequireDefault(_Success);
+
 	var _NotFound = __webpack_require__(514);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
@@ -26598,7 +26602,10 @@
 	//Errors
 
 
-	//Admin
+	//COMPONENTS
+
+	//User
+	//PACKAGES
 	var Routes = function Routes(props) {
 		return _react2.default.createElement(
 			_reactRouter.Router,
@@ -26615,16 +26622,14 @@
 				{ path: '/Admin', component: _Admin2.default },
 				_react2.default.createElement(_reactRouter.IndexRoute, { component: _Results2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '/Admin/Add', component: _Add2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: '/Admin/Delete', component: _Delete2.default })
+				_react2.default.createElement(_reactRouter.Route, { path: '/Admin/Delete', component: _Delete2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '/Admin/Success', component: _Success2.default })
 			),
 			_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
 		);
 	};
 
-	//COMPONENTS
-
-	//User
-	//PACKAGES
+	//Admin
 	exports.default = Routes;
 
 /***/ },
@@ -45994,7 +45999,12 @@
 	        });
 	    },
 	    submitQuestion: function submitQuestion(question) {
-	        return _axios2.default.post('../api/questions/updateAnswer', question).then(function (response) {
+	        return _axios2.default.post('../api/questions/', question).then(function (response) {
+	            return response;
+	        });
+	    },
+	    deleteQuestion: function deleteQuestion(question) {
+	        return _axios2.default.delete('../api/questions/', { data: { questionId: question } }).then(function (response) {
 	            return response;
 	        });
 	    }
@@ -47593,6 +47603,15 @@
 										{ eventKey: 3 },
 										'Delete Question'
 									)
+								),
+								_react2.default.createElement(
+									_reactRouterBootstrap.IndexLinkContainer,
+									{ to: "/" },
+									_react2.default.createElement(
+										_reactBootstrap.NavItem,
+										{ eventKey: 4 },
+										'Back to Survey'
+									)
 								)
 							)
 						)
@@ -48205,6 +48224,12 @@
 
 	var _reactBootstrap = __webpack_require__(236);
 
+	var _utils = __webpack_require__(487);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _reactRouter = __webpack_require__(178);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48214,8 +48239,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	//import Utils from '../Utils/utils';
-
 	var Home = function (_Component) {
 		_inherits(Home, _Component);
 
@@ -48224,12 +48247,21 @@
 
 			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
-			_this.state = {};
+			_this.state = {
+				question: "",
+				answers: [{
+					answer: "",
+					responses: 0
+
+				}, {
+					answer: "",
+					responses: 0
+				}]
+			};
 
 			//Bind functions here
-			//this.handleFormChange = this.handleFormChange.bind(this);
-			//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-
+			_this.handleFormChange = _this.handleFormChange.bind(_this);
+			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
 
 			return _this;
 		}
@@ -48242,13 +48274,42 @@
 			value: function componentDidUpdate(prevProps, prevState) {}
 		}, {
 			key: 'handleFormSubmit',
-			value: function handleFormSubmit(event) {}
+			value: function handleFormSubmit(event) {
+				event.preventDefault();
+				_utils2.default.submitQuestion(this.state).then(function (response) {
+					if (response.status === 201) {
+						_reactRouter.hashHistory.push('/Admin/Success');
+					} else {
+						_reactRouter.hashHistory.push('/Error');
+					}
+				});
+				console.log(this.state);
+			}
 		}, {
 			key: 'handleFormChange',
-			value: function handleFormChange(event) {}
+			value: function handleFormChange(event) {
+				if (event.target.id === 'question') {
+					this.setState({ question: event.target.value });
+				} else {
+					var newArr = this.state.answers;
+					newArr[parseInt(event.target.id)].answer = event.target.value;
+					this.setState({ answers: newArr });
+				}
+				console.log(event.target.value, event.target.id);
+			}
+		}, {
+			key: 'addAnswer',
+			value: function addAnswer() {
+				var newInput = {
+					answer: "",
+					responses: 0
+				};
+				this.setState({ answers: this.state.answers.concat([newInput]) });
+			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
 
 				return _react2.default.createElement(
 					'div',
@@ -48263,9 +48324,55 @@
 								_reactBootstrap.Col,
 								{ sm: 12 },
 								_react2.default.createElement(
-									'h2',
-									{ className: 'text-center' },
-									'Add'
+									'div',
+									null,
+									_react2.default.createElement(
+										_reactBootstrap.Form,
+										{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
+										_react2.default.createElement(
+											_reactBootstrap.FormGroup,
+											null,
+											_react2.default.createElement(
+												_reactBootstrap.ControlLabel,
+												null,
+												'Enter a Question'
+											),
+											_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'question' })
+										),
+										_react2.default.createElement(
+											'div',
+											{ id: 'dynamicInput' },
+											_react2.default.createElement(
+												_reactBootstrap.FormGroup,
+												null,
+												_react2.default.createElement(
+													_reactBootstrap.ControlLabel,
+													null,
+													'Enter Answers'
+												),
+												this.state.answers.map(function (answer, index) {
+
+													return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
+												})
+											)
+										),
+										_react2.default.createElement(
+											_reactBootstrap.Button,
+											{ bsStyle: 'primary', onClick: function onClick() {
+													return _this2.addAnswer();
+												} },
+											'Add Another Answer'
+										),
+										_react2.default.createElement(
+											'div',
+											{ className: 'text-center' },
+											_react2.default.createElement(
+												_reactBootstrap.Button,
+												{ bsStyle: 'success', type: 'submit' },
+												'Submit Question'
+											)
+										)
+									)
 								)
 							)
 						)
@@ -48297,6 +48404,12 @@
 
 	var _reactBootstrap = __webpack_require__(236);
 
+	var _utils = __webpack_require__(487);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _reactRouter = __webpack_require__(178);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48306,7 +48419,184 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	//import Utils from '../Utils/utils';
+	var Home = function (_Component) {
+		_inherits(Home, _Component);
+
+		function Home(props) {
+			_classCallCheck(this, Home);
+
+			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+			_this.state = {
+				results: {},
+				status: []
+			};
+
+			//Bind functions here
+			_this.handleFormChange = _this.handleFormChange.bind(_this);
+			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+			return _this;
+		}
+
+		_createClass(Home, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _this2 = this;
+
+				_utils2.default.getResults().then(function (results) {
+					if (results.status === 200) {
+						_this2.setState({ results: results.data });
+						var tempArr = new Array(results.data.length);
+						tempArr.fill(false);
+						_this2.setState({ status: tempArr });
+					}
+				});
+			}
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {}
+		}, {
+			key: 'handleFormSubmit',
+			value: function handleFormSubmit(event) {
+				var _this3 = this;
+
+				event.preventDefault();
+				this.state.status.forEach(function (val, index) {
+					if (val) {
+						_utils2.default.deleteQuestion(_this3.state.results[index].id).then(function (response) {
+							if (response.status === 202) {
+								_reactRouter.hashHistory.push('/Admin/Success');
+							} else {
+								_reactRouter.hashHistory.push('/Error');
+							}
+						});
+					}
+				});
+			}
+		}, {
+			key: 'handleFormChange',
+			value: function handleFormChange(event) {
+				var tempArr = this.state.status;
+				tempArr[parseInt(event.target.id)] = !tempArr[parseInt(event.target.id)];
+				this.setState({ status: tempArr });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var questions = this.state.results;
+
+				function Questions(props) {
+					var results = props.state.results;
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							results.map(function (questions, indexQuest) {
+								return _react2.default.createElement(
+									'div',
+									{ key: indexQuest },
+									_react2.default.createElement(
+										_reactBootstrap.Checkbox,
+										{ id: indexQuest.toString(), checked: props.state.status[indexQuest], onChange: function onChange() {} },
+										questions.question
+									)
+								);
+							})
+						)
+					);
+				}
+
+				function Error() {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h1',
+							{ className: 'text-center' },
+							'There Was an Error Getting the Questions '
+						),
+						_react2.default.createElement(
+							'h1',
+							{ className: 'text-center' },
+							' Please Try Again Later!'
+						)
+					);
+				}
+
+				function GetQuestions(props) {
+					if (props.state.results.length > 0) {
+						return _react2.default.createElement(Questions, { state: props.state });
+					} else {
+						return _react2.default.createElement(Error, null);
+					}
+				}
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Grid,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 12 },
+								_react2.default.createElement(
+									'h2',
+									null,
+									'Delete Questions'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Form,
+									{ onChange: this.handleFormChange, onSubmit: this.handleFormSubmit },
+									_react2.default.createElement(GetQuestions, { state: this.state }),
+									_react2.default.createElement(
+										_reactBootstrap.Button,
+										{ type: 'submit', bsStyle: 'primary' },
+										' Submit '
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Home;
+	}(_react.Component);
+
+	exports.default = Home;
+
+/***/ },
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(236);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
+
 
 	var Home = function (_Component) {
 		_inherits(Home, _Component);
@@ -48341,6 +48631,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				console.log(this.props.location);
 
 				return _react2.default.createElement(
 					'div',
@@ -48357,7 +48648,7 @@
 								_react2.default.createElement(
 									'h2',
 									{ className: 'text-center' },
-									'Delete!'
+									'Success'
 								)
 							)
 						)

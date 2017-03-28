@@ -23,7 +23,13 @@ const Utils = {
         });
     },
     submitQuestion:(question) =>{
-        return axios.post('../api/questions/updateAnswer', question)
+        return axios.post('../api/questions/', question)
+        .then((response) =>{
+            return response;
+        });
+    },
+    deleteQuestion:(question) =>{
+        return axios.delete('../api/questions/', {data:{questionId:question}})
         .then((response) =>{
             return response;
         });

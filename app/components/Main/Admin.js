@@ -47,6 +47,9 @@ class Home extends Component{
 							<IndexLinkContainer to={"/Admin/Delete"} >
 								<NavItem eventKey={3} >Delete Question</NavItem>
 							</IndexLinkContainer>
+							<IndexLinkContainer to={"/"} >
+								<NavItem eventKey={4} >Back to Survey</NavItem>
+							</IndexLinkContainer>
 						</Nav>
 						
 					</Navbar.Collapse>

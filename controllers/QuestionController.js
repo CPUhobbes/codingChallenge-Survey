@@ -87,10 +87,11 @@ module.exports = {
 	},
 
 	deleteQuestion(req, res){
+		console.log(req.body.questionId);
 		return Question
 			.find({
 				where:{
-					id: req.params.questionId
+					id: req.body.questionId
 				},
 			})
 			.then(question => {
