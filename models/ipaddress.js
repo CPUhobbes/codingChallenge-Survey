@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const IpAddress = sequelize.define('IpAddress', {
    ip: {

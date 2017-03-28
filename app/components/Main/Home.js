@@ -12,6 +12,7 @@ class Home extends Component{
 			survey:{
 				question:'',
 				answers:[],
+				id:''
 			},
 			selection:-1
 
@@ -26,9 +27,11 @@ class Home extends Component{
 	
 	componentWillMount(){
 		Utils.getQuestion().then((data)=>{
+			console.log(data[0]);
 			let newObj = {
 				question:data[0].question,
 				answers:data[0].answers,
+				id:data[0].id
 
 			}
 			this.setState({survey:newObj});
@@ -43,19 +46,24 @@ class Home extends Component{
 	
 	handleFormSubmit(event){
 		event.preventDefault();
+		
 		if(this.state.selection>0){
-			Utils.submitAnswer(this.state.selection).then((response) =>{
-				if(response.status === 201){
-					hashHistory.push('/ThankYou');
-				}
-				else{
-					hashHistory.push('/Error');
-				}
+			Utils.submitAnswer(this.state.selection).then(() =>{
+				
+				Utils.updateIp(this.state.survey.id).then((response) =>{
+					if(response.status === 201){
+						hashHistory.push('/ThankYou');
+					}
+					else{
+						hashHistory.push('/Error');
+					}
+				})
 			})
 		}
 	}
 	
 	handleFormChange(event){
+		console.log(this.state);
 		this.setState({selection: parseInt(event.target.id)});
 	}
 

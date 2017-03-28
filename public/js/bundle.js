@@ -26748,7 +26748,8 @@
 			_this.state = {
 				survey: {
 					question: '',
-					answers: []
+					answers: [],
+					id: ''
 				},
 				selection: -1
 
@@ -26767,9 +26768,11 @@
 				var _this2 = this;
 
 				_utils2.default.getQuestion().then(function (data) {
+					console.log(data[0]);
 					var newObj = {
 						question: data[0].question,
-						answers: data[0].answers
+						answers: data[0].answers,
+						id: data[0].id
 
 					};
 					_this2.setState({ survey: newObj });
@@ -26781,20 +26784,27 @@
 		}, {
 			key: 'handleFormSubmit',
 			value: function handleFormSubmit(event) {
+				var _this3 = this;
+
 				event.preventDefault();
+
 				if (this.state.selection > 0) {
-					_utils2.default.submitAnswer(this.state.selection).then(function (response) {
-						if (response.status === 201) {
-							_reactRouter.hashHistory.push('/ThankYou');
-						} else {
-							_reactRouter.hashHistory.push('/Error');
-						}
+					_utils2.default.submitAnswer(this.state.selection).then(function () {
+
+						_utils2.default.updateIp(_this3.state.survey.id).then(function (response) {
+							if (response.status === 201) {
+								_reactRouter.hashHistory.push('/ThankYou');
+							} else {
+								_reactRouter.hashHistory.push('/Error');
+							}
+						});
 					});
 				}
 			}
 		}, {
 			key: 'handleFormChange',
 			value: function handleFormChange(event) {
+				console.log(this.state);
 				this.setState({ selection: parseInt(event.target.id) });
 			}
 		}, {
@@ -46005,6 +46015,11 @@
 	    },
 	    deleteQuestion: function deleteQuestion(question) {
 	        return _axios2.default.delete('../api/questions/', { data: { questionId: question } }).then(function (response) {
+	            return response;
+	        });
+	    },
+	    updateIp: function updateIp(question) {
+	        return _axios2.default.post('../api/questions/ipAddress/', { data: { questionId: question } }).then(function (response) {
 	            return response;
 	        });
 	    }

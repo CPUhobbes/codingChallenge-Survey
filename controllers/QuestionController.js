@@ -63,10 +63,6 @@ module.exports = {
 
 		return Question
 			.findAll({
-				order: [
-  					[sequelize.fn('RAND')]
-				],
-				limit: 1,
 				include:[
 				{
 					model: Answer,
@@ -76,10 +72,31 @@ module.exports = {
 					model: IpAddress,
 					as: 'ipAddresses',
 					where:{
-						ip: {$ne: ipAddr}
+						ip: {$eq:'::1'}
 					}
 							
 				}]
+			}).then(results => {
+				let list =[-1];
+				results.forEach((val, index)=>{
+					list.push(val.dataValues.id)
+				})
+				return Question.findAll({
+					order: [
+  						[sequelize.fn('RAND')]
+					],
+					limit: 1,
+					include:[
+					{
+						model: Answer,
+						as: 'answers',
+					}],
+					where: {
+						id:{
+							$notIn: list
+						}
+					}
+				})
 			})
 			.then(questions => res.status(201).send(questions))
 			.catch(error => res.status(400).send(error)

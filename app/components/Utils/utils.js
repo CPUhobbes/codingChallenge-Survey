@@ -33,6 +33,12 @@ const Utils = {
         .then((response) =>{
             return response;
         });
+    },
+    updateIp:(question) =>{
+        return axios.post('../api/questions/ipAddress/', {data:{questionId:question}})
+        .then((response) =>{
+            return response;
+        });
     }
 }
 
