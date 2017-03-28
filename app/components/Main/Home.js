@@ -43,15 +43,16 @@ class Home extends Component{
 	
 	handleFormSubmit(event){
 		event.preventDefault();
-		console.log(this.state.selection);
-		Utils.submitAnswer(this.state.selection).then((response) =>{
-			if(response.status === 201){
-				hashHistory.push('/ThankYou');
-			}
-			else{
-				hashHistory.push('/Error');
-			}
-		})
+		if(this.state.selection>0){
+			Utils.submitAnswer(this.state.selection).then((response) =>{
+				if(response.status === 201){
+					hashHistory.push('/ThankYou');
+				}
+				else{
+					hashHistory.push('/Error');
+				}
+			})
+		}
 	}
 	
 	handleFormChange(event){
