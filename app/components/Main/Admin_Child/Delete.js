@@ -57,6 +57,7 @@ class Delete extends Component{
 	}
 
 	render(){
+		//variables
 		let results = this.state.results;
 
 		function questions(){

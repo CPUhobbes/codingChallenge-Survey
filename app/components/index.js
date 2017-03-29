@@ -20,8 +20,6 @@ class Index extends Component {
 			user:"",
 			pass:"",
 			adminCred:{user:"admin", pass:"pass"}
-
-
 		}
 		//Bind functions here
 		this.triggerModal = this.triggerModal.bind(this);
@@ -58,10 +56,6 @@ class Index extends Component {
 				state: {login:this.state.login }
 			})
 		}
-		else{
-			console.log("no")
-		}
-
 	}
 
 	loginFormHandler(event){
@@ -69,9 +63,6 @@ class Index extends Component {
     	newState[event.target.id] = event.target.value;
     	this.setState(newState);
 	}
-
-
-
 
 	triggerModal(){
   		let modalState = {showModal:!this.state.modal.showModal, enable:true};
@@ -86,8 +77,6 @@ class Index extends Component {
   	}
 
 	render() {
-		let message ="error";
-
 		return(
 		  	<div>
 			  	<h5 className="text-right"><a href="#" onClick={this.triggerModal}> Admin Log In </a></h5>

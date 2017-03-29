@@ -2,38 +2,14 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid, Form, Radio, Button} from 'react-bootstrap';
 
-class Home extends Component{
+class Success extends Component{
 	constructor(props) {
 		super(props);
 
 		this.state = {
 
 		};
-
-		//Bind functions here
-		//this.handleFormChange = this.handleFormChange.bind(this);
-		//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-		
-
   	}
-	
-	componentWillMount(){
-		
-	}
-
-	componentDidUpdate(prevProps, prevState){
-		
-	}
-
-
-	
-	handleFormSubmit(event){
-		
-	}
-	
-	handleFormChange(event){
-		
-	}
 
 	render(){
 		console.log(this.props.location);
@@ -44,7 +20,7 @@ class Home extends Component{
 				<Grid>
 					<Row>
 						<Col sm={12}>
-							<h2 className="text-center">Success</h2>
+							<h2 className="text-center">Operation was a Success</h2>
 						</Col>
 					</Row>
 				</Grid>
@@ -53,4 +29,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default Success;

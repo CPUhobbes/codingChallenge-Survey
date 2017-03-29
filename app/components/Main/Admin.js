@@ -22,24 +22,18 @@ class Admin extends Component{
 		else{
 			this.setState({login:false});
 		}
-		
-		
-
 	}
 
-	componentDidMount(){
-
-	}
 	handleFormSubmit(event){
 		hashHistory.push('/');
 	}
-	
-	handleFormChange(event){
-	}
 
 	render(){
+		//variables
 		const children = this.props.children;
 		const login = this.state.login;
+
+		//functions
 		const handleSubmit =this.handleFormSubmit
 
 		function showAdmin(){

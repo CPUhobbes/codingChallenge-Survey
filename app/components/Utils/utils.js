@@ -7,7 +7,6 @@ const Utils = {
             return response;
         });
     },
-
     getQuestion:() =>{
         return axios.get('../api/avaliableQuestions')
         .then((response)=>{
@@ -15,7 +14,6 @@ const Utils = {
         });
  
     },
-
     submitAnswer:(id) =>{
         return axios.put('../api/questions/updateAnswer', {answerId: id})
         .then((response) =>{

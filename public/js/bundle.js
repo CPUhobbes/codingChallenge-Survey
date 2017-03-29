@@ -26680,7 +26680,6 @@
 				user: "",
 				pass: "",
 				adminCred: { user: "admin", pass: "pass" }
-
 			};
 			//Bind functions here
 			_this.triggerModal = _this.triggerModal.bind(_this);
@@ -26719,8 +26718,6 @@
 						pathname: '/Admin',
 						state: { login: this.state.login }
 					});
-				} else {
-					console.log("no");
 				}
 			}
 		}, {
@@ -26746,8 +26743,6 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var message = "error";
-
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -46207,13 +46202,11 @@
 	            return response;
 	        });
 	    },
-
 	    getQuestion: function getQuestion() {
 	        return _axios2.default.get('../api/avaliableQuestions').then(function (response) {
 	            return response.data;
 	        });
 	    },
-
 	    submitAnswer: function submitAnswer(id) {
 	        return _axios2.default.put('../api/questions/updateAnswer', { answerId: id }).then(function (response) {
 	            return response;
@@ -47768,7 +47761,6 @@
 
 			//Bind functions here
 			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
-
 			return _this;
 		}
 
@@ -47879,21 +47871,18 @@
 				}
 			}
 		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {}
-		}, {
 			key: 'handleFormSubmit',
 			value: function handleFormSubmit(event) {
 				_reactRouter.hashHistory.push('/');
 			}
 		}, {
-			key: 'handleFormChange',
-			value: function handleFormChange(event) {}
-		}, {
 			key: 'render',
 			value: function render() {
+				//variables
 				var children = this.props.children;
 				var login = this.state.login;
+
+				//functions
 				var handleSubmit = this.handleFormSubmit;
 
 				function showAdmin() {
@@ -48254,27 +48243,22 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
+	var Results = function (_Component) {
+		_inherits(Results, _Component);
 
-		function Home(props) {
-			_classCallCheck(this, Home);
+		function Results(props) {
+			_classCallCheck(this, Results);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this, props));
 
 			_this.state = {
 				results: {}
 			};
 
-			//Bind functions here
-			//this.handleFormChange = this.handleFormChange.bind(this);
-			//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-
-
 			return _this;
 		}
 
-		_createClass(Home, [{
+		_createClass(Results, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
 				var _this2 = this;
@@ -48291,6 +48275,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				//
 				var results = this.state.results;
 
 				function displayResults() {
@@ -48422,10 +48407,10 @@
 			}
 		}]);
 
-		return Home;
+		return Results;
 	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Results;
 
 /***/ },
 /* 519 */
@@ -48701,6 +48686,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				//variables
 				var results = this.state.results;
 
 				function questions() {
@@ -48844,37 +48830,19 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Import Packages
 
 
-	var Home = function (_Component) {
-		_inherits(Home, _Component);
+	var Success = function (_Component) {
+		_inherits(Success, _Component);
 
-		function Home(props) {
-			_classCallCheck(this, Home);
+		function Success(props) {
+			_classCallCheck(this, Success);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Success.__proto__ || Object.getPrototypeOf(Success)).call(this, props));
 
 			_this.state = {};
-
-			//Bind functions here
-			//this.handleFormChange = this.handleFormChange.bind(this);
-			//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-
-
 			return _this;
 		}
 
-		_createClass(Home, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate(prevProps, prevState) {}
-		}, {
-			key: 'handleFormSubmit',
-			value: function handleFormSubmit(event) {}
-		}, {
-			key: 'handleFormChange',
-			value: function handleFormChange(event) {}
-		}, {
+		_createClass(Success, [{
 			key: 'render',
 			value: function render() {
 				console.log(this.props.location);
@@ -48894,7 +48862,7 @@
 								_react2.default.createElement(
 									'h2',
 									{ className: 'text-center' },
-									'Success'
+									'Operation was a Success'
 								)
 							)
 						)
@@ -48903,10 +48871,10 @@
 			}
 		}]);
 
-		return Home;
+		return Success;
 	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Success;
 
 /***/ },
 /* 522 */
@@ -48932,16 +48900,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Error = function (_Component) {
-		_inherits(Error, _Component);
+	var NotFound = function (_Component) {
+		_inherits(NotFound, _Component);
 
-		function Error() {
-			_classCallCheck(this, Error);
+		function NotFound() {
+			_classCallCheck(this, NotFound);
 
-			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).apply(this, arguments));
 		}
 
-		_createClass(Error, [{
+		_createClass(NotFound, [{
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -48956,10 +48924,10 @@
 			}
 		}]);
 
-		return Error;
+		return NotFound;
 	}(_react.Component);
 
-	exports.default = Error;
+	exports.default = NotFound;
 
 /***/ },
 /* 523 */

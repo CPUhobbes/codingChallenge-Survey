@@ -13,8 +13,6 @@ class ThankYou extends Component{
 
 		//Bind functions here
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
-		
-
   	}
 	
 	handleFormSubmit(event){

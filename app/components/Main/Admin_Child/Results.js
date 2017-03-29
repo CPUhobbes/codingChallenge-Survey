@@ -3,18 +3,13 @@ import React, { Component } from 'react';
 import { Row, Col, Grid, Jumbotron} from 'react-bootstrap';
 import Utils from '../../Utils/utils';
 
-class Home extends Component{
+class Results extends Component{
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			results:{}
 		};
-
-		//Bind functions here
-		//this.handleFormChange = this.handleFormChange.bind(this);
-		//this.handleFormSubmit = this.handleFormSubmit.bind(this);
-		
 
   	}
 	
@@ -32,6 +27,7 @@ class Home extends Component{
 	}
 
 	render(){
+		//
 		const results = this.state.results;
 
 		function displayResults(){
@@ -100,4 +96,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default Results;

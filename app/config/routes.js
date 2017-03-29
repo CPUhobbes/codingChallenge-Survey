@@ -36,7 +36,6 @@ const Routes = (props) => (
 		</Route>
 		<Route path="*" component={NotFound} />
 	</Router>
-
 );
 
 export default Routes;
