@@ -12,7 +12,7 @@ class Success extends Component{
   	}
 
 	render(){
-		console.log(this.props.location);
+		//console.log(this.props.location);
 		
 		return (
 			

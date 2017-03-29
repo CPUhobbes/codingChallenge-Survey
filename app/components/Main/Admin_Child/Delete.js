@@ -30,10 +30,6 @@ class Delete extends Component{
 		})
 	}
 
-	componentDidUpdate(prevProps, prevState){
-		
-	}
-
 	handleFormSubmit(event){
 		event.preventDefault();
 		this.state.status.forEach((val, index)=>{

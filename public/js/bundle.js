@@ -48661,9 +48661,6 @@
 				});
 			}
 		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate(prevProps, prevState) {}
-		}, {
 			key: 'handleFormSubmit',
 			value: function handleFormSubmit(event) {
 				var _this3 = this;
@@ -48850,7 +48847,7 @@
 		_createClass(Success, [{
 			key: 'render',
 			value: function render() {
-				console.log(this.props.location);
+				//console.log(this.props.location);
 
 				return _react2.default.createElement(
 					'div',
