@@ -81,7 +81,8 @@ class Index extends Component {
 		  	<div>
 			  	<h5 className="text-right"><a href="#" onClick={this.triggerModal}> Admin Log In </a></h5>
 			  	{/*<Link to="/Admin"><h5 className="text-right">Admin Login</h5></Link>*/}
-				<h1 className="text-center">Coding-Challenge-Survey</h1>
+				<h1 className="text-center">Coding-Challenge</h1>
+				<h1 className="text-center">Survey</h1>
 				
 			{/* -- Modal -- */}
 			

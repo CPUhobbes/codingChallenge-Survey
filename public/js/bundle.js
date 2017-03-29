@@ -26758,7 +26758,12 @@
 					_react2.default.createElement(
 						'h1',
 						{ className: 'text-center' },
-						'Coding-Challenge-Survey'
+						'Coding-Challenge'
+					),
+					_react2.default.createElement(
+						'h1',
+						{ className: 'text-center' },
+						'Survey'
 					),
 					_react2.default.createElement(
 						_reactBootstrap.Modal,
