@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 
-class Error extends Component {
+class Submit extends Component {
 	render() {
 		return (
 			<div>
@@ -11,4 +11,4 @@ class Error extends Component {
 		);
 	}
 }
-export default Error;
+export default Submit;

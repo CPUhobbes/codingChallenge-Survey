@@ -26977,14 +26977,18 @@
 							_reactBootstrap.Col,
 							{ sm: 12 },
 							_react2.default.createElement(
-								'h2',
-								null,
-								'Thank you, but all questions have been answered!'
-							),
-							_react2.default.createElement(
-								'h2',
-								null,
-								'Please try again later'
+								'div',
+								{ className: 'text-center' },
+								_react2.default.createElement(
+									'h2',
+									null,
+									'Thank you, but all questions have been answered!'
+								),
+								_react2.default.createElement(
+									'h2',
+									null,
+									'Please try again later'
+								)
 							)
 						)
 					);
@@ -48479,17 +48483,10 @@
 			//Bind functions here
 			_this.handleFormChange = _this.handleFormChange.bind(_this);
 			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
-
 			return _this;
 		}
 
 		_createClass(Add, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate(prevProps, prevState) {}
-		}, {
 			key: 'handleFormSubmit',
 			value: function handleFormSubmit(event) {
 				event.preventDefault();
@@ -48500,7 +48497,7 @@
 						_reactRouter.hashHistory.push('/Error');
 					}
 				});
-				console.log(this.state);
+				//console.log(this.state);
 			}
 		}, {
 			key: 'handleFormChange',
@@ -48512,7 +48509,7 @@
 					newArr[parseInt(event.target.id)].answer = event.target.value;
 					this.setState({ answers: newArr });
 				}
-				console.log(event.target.value, event.target.id);
+				//console.log(event.target.value, event.target.id);
 			}
 		}, {
 			key: 'addAnswer',
@@ -48573,7 +48570,6 @@
 													'Enter Answers'
 												),
 												this.state.answers.map(function (answer, index) {
-
 													return _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', key: index, id: index.toString() });
 												})
 											)
@@ -48991,16 +48987,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Error = function (_Component) {
-		_inherits(Error, _Component);
+	var Submit = function (_Component) {
+		_inherits(Submit, _Component);
 
-		function Error() {
-			_classCallCheck(this, Error);
+		function Submit() {
+			_classCallCheck(this, Submit);
 
-			return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Submit.__proto__ || Object.getPrototypeOf(Submit)).apply(this, arguments));
 		}
 
-		_createClass(Error, [{
+		_createClass(Submit, [{
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -49025,10 +49021,10 @@
 			}
 		}]);
 
-		return Error;
+		return Submit;
 	}(_react.Component);
 
-	exports.default = Error;
+	exports.default = Submit;
 
 /***/ }
 /******/ ]);

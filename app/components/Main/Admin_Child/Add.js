@@ -26,20 +26,8 @@ class Add extends Component{
 		//Bind functions here
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
-		
-
   	}
-	
-	componentWillMount(){
-		
-	}
 
-	componentDidUpdate(prevProps, prevState){
-		
-	}
-
-
-	
 	handleFormSubmit(event){
 		event.preventDefault();
 		Utils.submitQuestion(this.state).then((response)=>{
@@ -51,7 +39,7 @@ class Add extends Component{
 			}
 
 		});
-		console.log(this.state);
+		//console.log(this.state);
 	}
 	
 	handleFormChange(event){
@@ -63,10 +51,9 @@ class Add extends Component{
 			newArr[parseInt(event.target.id)].answer = event.target.value;
 			this.setState({answers:newArr});
 		}
-		console.log(event.target.value, event.target.id);
-
-
+		//console.log(event.target.value, event.target.id);
 	}
+
 	addAnswer(){
         let newInput = {
 			answer:"",
@@ -75,12 +62,8 @@ class Add extends Component{
         this.setState({ answers: this.state.answers.concat([newInput]) });
     }
 	
-
 	render(){
-		
-		
 		return (
-			
 			<div>
 				<Grid>
 					<Row>
@@ -92,22 +75,19 @@ class Add extends Component{
 										<ControlLabel>Enter a Question</ControlLabel>
 										<FormControl type="text" id="question" />
 									</FormGroup>
-
 									<div id="dynamicInput">
 										<FormGroup>
 											<ControlLabel>Enter Answers</ControlLabel>
-										{this.state.answers.map((answer, index) => {
-											
-											return(
-												<FormControl type="text" key={index} id={index.toString()} />
-											)
-										})}
+											{this.state.answers.map((answer, index) => {
+												return(
+													<FormControl type="text" key={index} id={index.toString()} />
+												)
+											})}
 										</FormGroup>
 									</div>
 									<Button bsStyle="primary" onClick={ () => this.addAnswer() }>
 										Add Another Answer
 									</Button>
-									
 									<div className="text-center buttonMargin">
 										<Button bsStyle="success" type="submit" bsSize='lg'>Submit Question</Button>
 									</div>

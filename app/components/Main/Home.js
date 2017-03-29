@@ -87,8 +87,10 @@ class Home extends Component{
 			return (
 				<div>
 					<Col sm={12}>
-						<h2>Thank you, but all questions have been answered!</h2>
-						<h2>Please try again later</h2>
+						<div className="text-center">
+							<h2>Thank you, but all questions have been answered!</h2>
+							<h2>Please try again later</h2>
+						</div>
 					</Col>
 				</div>
 			);
