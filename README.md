@@ -11,7 +11,7 @@
 2. Run npm install
 3. Install sequelize-cli if not installed globally
 4. Create database in MySQL called 'survey'
-    1. Change MySQL login info (and database name if needed) in the sequelize.json file
+    * Change MySQL login info (and database name if needed) in the sequelize.json file
 5. Migrate database by running 'sequelize db:migrate'
 6. Run 'webpack -w' to transpile React code
 7. Run 'node server.js' to start server

@@ -1,5 +1,3 @@
-"use strict";
-
 //Dependencies
 const express = require('express'),
     Routes = require ('./config/routes.js'),
