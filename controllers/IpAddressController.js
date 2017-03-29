@@ -5,13 +5,13 @@ Question.hasMany(Answer, IpAddress, { onDelete: 'cascade' });
 
 module.exports = {
 	create(req, res) {
-		console.log(req.body.data);
+		
 		//Get IP Address of Client
 		let ipAddr = req.headers['x-forwarded-for'] || 
 			req.connection.remoteAddress || 
 			req.socket.remoteAddress ||
 			req.connection.socket.remoteAddress;
-			
+			console.log(ipAddr.trim(), "################");
 		return IpAddress
 			.create({
 				ip: ipAddr,

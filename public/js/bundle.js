@@ -27016,9 +27016,7 @@
 										_react2.default.createElement(
 											_reactBootstrap.Radio,
 											{ id: val.id, name: 'radioGroup' },
-											val.answer,
-											' --- ',
-											val.responses
+											val.answer
 										)
 									);
 								}),

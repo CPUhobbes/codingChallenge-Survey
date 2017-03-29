@@ -59,7 +59,7 @@ module.exports = {
 			req.socket.remoteAddress ||
 			req.connection.socket.remoteAddress;
 
-		console.log(ipAddr);
+		console.log(ipAddr.trim());
 
 		return Question
 			.findAll({
@@ -72,7 +72,7 @@ module.exports = {
 					model: IpAddress,
 					as: 'ipAddresses',
 					where:{
-						ip: {$eq:'::1'}
+						ip: {$eq:ipAddr}
 					}
 							
 				}]

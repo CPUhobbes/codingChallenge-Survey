@@ -106,7 +106,7 @@ class Home extends Component{
 								return (
 									<h3 key={index}>
 										<Radio  id={val.id} name="radioGroup">
-											{val.answer} --- {val.responses}
+											{val.answer}
 											{/*<p> {val.answer} --- {val.responses} --- {val.id} </p>*/}
 										</Radio>
 									</h3> 
