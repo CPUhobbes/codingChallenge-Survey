@@ -9,7 +9,7 @@ module.exports = {
 	
 	//Create a new question
 	create(req, res) {
-		console.log(req.body.answers);
+		//console.log(req.body.answers);
 		return Question
 			.create({
 				question: req.body.question,
@@ -59,7 +59,7 @@ module.exports = {
 			req.socket.remoteAddress ||
 			req.connection.socket.remoteAddress;
 
-		console.log(ipAddr.trim());
+		//console.log(ipAddr);
 
 		return Question
 			.findAll({
@@ -104,7 +104,7 @@ module.exports = {
 	},
 
 	deleteQuestion(req, res){
-		console.log(req.body.questionId);
+		//console.log(req.body.questionId);
 		return Question
 			.find({
 				where:{

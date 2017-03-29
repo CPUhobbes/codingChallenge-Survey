@@ -1,10 +1,14 @@
 # A Survey App
 
-### Survey app that uses Bootstrap, React/React-Router, Node Express, Sequelize ORM, MySQL.  Users can only take a survey questions they have not previously answered.  This is done by keeping track of the IP Addresses.  The Admin panel allows the admin to add questions, delete questions, and view results.
+#### Survey app that uses Bootstrap, React/React-Router, Node Express, Sequelize ORM, MySQL.  Users can only take a survey questions they have not previously answered.  This is done by keeping track of the IP Addresses.  The Admin panel allows the admin to add questions, delete questions, and view results.
+
+## LIVE DEMO
+https://frozen-meadow-21427.herokuapp.com/
 
 ## ADMIN PANEL LOG IN
 * Username: admin
 * Password: pass
+* Admin login link in top right corner
 
 ## Instructions:
 1. Clone Repository

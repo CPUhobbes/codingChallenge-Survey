@@ -11,7 +11,6 @@ module.exports = {
 			req.connection.remoteAddress || 
 			req.socket.remoteAddress ||
 			req.connection.socket.remoteAddress;
-			console.log(ipAddr.trim(), "################");
 		return IpAddress
 			.create({
 				ip: ipAddr,
